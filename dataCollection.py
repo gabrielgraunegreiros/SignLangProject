@@ -7,20 +7,20 @@ import time
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1)
 
-#bgsus = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
+bgsus = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
 
-gris = 0
 bgsusMask = 0
 
 offset = 30
 imgSize = 300
 
-folder = "Data/Igris"
+folder = "Data/L"
 counter = 0
 
 while True:
     success, img = cap.read()
     hands, img = detector.findHands(img)
+
     if hands:
         hand = hands[0]
         x, y, w, h = hand['bbox']
@@ -42,8 +42,7 @@ while True:
             imgWhite[:, wGap:wCal + wGap] = imgResize
 
             mFilter = cv2.medianBlur(imgWhite, 5)
-            gris = cv2.cvtColor(mFilter, cv2.COLOR_BGR2GRAY)
-            #bgsusMask = bgsus.apply(gris)
+            bgsusMask = bgsus.apply(mFilter)
 
 
         else:
@@ -55,18 +54,17 @@ while True:
 
             imgWhite[hGap:hCal + hGap, :] = imgResize
             mFilter = cv2.medianBlur(imgWhite, 5)
-            gris = cv2.cvtColor(mFilter, cv2.COLOR_BGR2GRAY)
-            #bgsusMask = bgsus.apply(gris)
+            bgsusMask = bgsus.apply(mFilter)
 
-        cv2.imshow("ImageCrop", imgCrop)
+        #cv2.imshow("ImageCrop", imgCrop)
         cv2.imshow("ImageWhite", imgWhite)
+        cv2.imshow("Filtro", mFilter)
         #cv2.imshow("BgSus", bgsusMask)
-        cv2.imshow("Gris", gris)
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
 
     if key == ord("s"):
         counter += 1
-        cv2.imwrite(f'{folder}/Image_{time.time()}.jpg', gris)
+        cv2.imwrite(f'{folder}/Image_{time.time()}.jpg', mFilter)
         print(counter)

@@ -53,6 +53,7 @@ while True:
             imgWhite[hGap:hCal + hGap, :] = imgResize
             mFilter = cv2.medianBlur(imgWhite, 5)
             prediction, index = classifier.getPrediction(mFilter, draw=False)
+            print(prediction, index)
 
         cv2.rectangle(imgOutput, (x - offset, y - offset - 50), (x - offset + 90, y - offset - 50 + 50), (255, 0, 255),
                       cv2.FILLED)
