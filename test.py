@@ -6,7 +6,7 @@ import math
 
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1)
-classifier = Classifier("Model/keras_model.h5", "Model/labels.txt")
+classifier = Classifier("Model/keras_model2.h5", "Model/labels2.txt")
 
 offset = 30
 imgSize = 300
@@ -27,8 +27,6 @@ while True:
         imgWhite = np.ones((imgSize, imgSize, 3), np.uint8) * 255
         imgCrop = img[y - offset:y + h + offset, x - offset:x + w + offset]
 
-        imgCropShape = imgCrop.shape
-
         aspectRatio = h / w
 
         if aspectRatio > 1:
@@ -40,7 +38,9 @@ while True:
 
             imgWhite[:, wGap:wCal + wGap] = imgResize
 
-            prediction, index = classifier.getPrediction(imgWhite, draw=False)
+            mFilter = cv2.medianBlur(imgWhite, 5)
+
+            prediction, index = classifier.getPrediction(mFilter, draw=False)
             print(prediction, index)
 
         else:
@@ -51,7 +51,8 @@ while True:
             hGap = math.ceil((300 - hCal) / 2)
 
             imgWhite[hGap:hCal + hGap, :] = imgResize
-            prediction, index = classifier.getPrediction(imgWhite, draw=False)
+            mFilter = cv2.medianBlur(imgWhite, 5)
+            prediction, index = classifier.getPrediction(mFilter, draw=False)
 
         cv2.rectangle(imgOutput, (x - offset, y - offset - 50), (x - offset + 90, y - offset - 50 + 50), (255, 0, 255),
                       cv2.FILLED)

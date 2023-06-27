@@ -7,10 +7,15 @@ import time
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1)
 
+#bgsus = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
+
+gris = 0
+bgsusMask = 0
+
 offset = 30
 imgSize = 300
 
-folder = "Data/C"
+folder = "Data/Igris"
 counter = 0
 
 while True:
@@ -36,6 +41,11 @@ while True:
 
             imgWhite[:, wGap:wCal + wGap] = imgResize
 
+            mFilter = cv2.medianBlur(imgWhite, 5)
+            gris = cv2.cvtColor(mFilter, cv2.COLOR_BGR2GRAY)
+            #bgsusMask = bgsus.apply(gris)
+
+
         else:
             k = imgSize / w
             hCal = math.ceil(k * h)
@@ -44,13 +54,19 @@ while True:
             hGap = math.ceil((300 - hCal) / 2)
 
             imgWhite[hGap:hCal + hGap, :] = imgResize
+            mFilter = cv2.medianBlur(imgWhite, 5)
+            gris = cv2.cvtColor(mFilter, cv2.COLOR_BGR2GRAY)
+            #bgsusMask = bgsus.apply(gris)
 
         cv2.imshow("ImageCrop", imgCrop)
         cv2.imshow("ImageWhite", imgWhite)
+        #cv2.imshow("BgSus", bgsusMask)
+        cv2.imshow("Gris", gris)
+
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
 
     if key == ord("s"):
         counter += 1
-        cv2.imwrite(f'{folder}/Image_{time.time()}.jpg', imgWhite)
+        cv2.imwrite(f'{folder}/Image_{time.time()}.jpg', gris)
         print(counter)
