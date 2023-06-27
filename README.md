@@ -1,10 +1,10 @@
 
-# Sign Language Recognition Group 02 Capstone
+# Reconocimiento de Lenguaje de Señas Grupo 02 Capstone
 
-This project was created as a BISINDO sign language recognition prototype,
-it contains the recognition of 3 letters of the language, these being C, E and I.
+Este proyecto fue creado como un prototipo de reconocimiento de lenguaje de señas BISINDO,
+contiene el reconocimiento de 3 letras del idioma, siendo estas C, E e I.
 
-## Some images
+## Algunas imágenes
 
 <div>
 
@@ -22,18 +22,23 @@ it contains the recognition of 3 letters of the language, these being C, E and I
   
 </div>
 
-For the installation exists 2 ways:
+Para la instalación existen 2 formas:
 
-1. Download and installation of the libraries from requirements.txt:
-   Download the project
-   In console write: conda create --name "NameOfTheEnv"
-   Then activate the environment with: conda activate "NameOfTheEnv"
-   Enter to the directory of the project downloaded with the console
-   Then install all the libraries of the requirements.txt with: pip install -r "requirements.txt"
+1. Descarga e instalación de las bibliotecas desde requirements.txt:
+   Descarga el proyecto
+   En la consola, escriba: conda create --name "NameOfTheEnv"
+   Luego active el entorno con: conda active "NameOfTheEnv"
+   Entrar al directorio del proyecto descargado con la consola
+   Luego instale todas las bibliotecas de los requisitos.txt con: pip install -r "requisitos.txt"
    
-3. Create/load an environment with all the libraries installed with the SingLangProject.yaml
-   Download the project
-   In the console write: conda env create -f SignLangProject.yaml
-   Then activate the new environment: activate NewSignLangProject
+2. Cree/cargue un entorno con todas las bibliotecas instaladas con SingLangProject.yaml
+   Descarga el proyecto
+   En la consola, escriba: conda env create -f SignLangProject.yaml
+   Luego active el nuevo entorno: active NewSignLangProject
 
+Las entradas para el prototipo son las siguientes:
+- Imagen captada mediante la cámara del ordenador.
+- Modelo entrenado mediante Teachable Machie by Google.
+Las salidas son las siguientes:
+- Imagen que muestra el reconocimiento de la seña y la refleja mediante un cuadro que rodea a la mano e indica qué seña se está haciendo.
 
